@@ -1,4 +1,4 @@
-# Speaker Recognition From Scratch
+# Speaker Recognition From Scratch For Indonesian Language
 
 ## Overview
 
