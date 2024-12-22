@@ -10,8 +10,43 @@ DATA_PATH ="./datasets"
 SAVE_NAME_MODEL = ""
 TRAIN_DATA_DIR = ""
 SAVED_MODEL_PATH = ""
+ARCHI_NAME = ""
 
 UTT_TEST_FILE_DIRECT="G0112/G0112_0_S0001.wav"
+
+
+# Whether to use bi-directional LSTM.
+BI_LSTM = True
+
+# If true, we use transformer instead of LSTM.
+USE_TRANSFORMER = False
+
+# If false, use last frame of LSTM inference as aggregated output;
+# if true, use mean frame of LSTM inference as aggregated output.
+FRAME_AGGREGATION_MEAN = True
+
+
+# Whether we are going to train with SpecAugment.
+SPECAUG_TRAINING = False
+
+
+if SPECAUG_TRAINING:
+    if BI_LSTM:
+        if FRAME_AGGREGATION_MEAN:
+            ARCHI_NAME = "bilstm.mean.specaug"
+        else:
+            ARCHI_NAME = "bilstm.specaug"
+    elif USE_TRANSFORMER:
+        ARCHI_NAME = "transformer.specaug"
+else:
+    if BI_LSTM:
+        if FRAME_AGGREGATION_MEAN:
+            ARCHI_NAME = "bilstm.mean"
+        else:
+            ARCHI_NAME = "bilstm"
+    elif USE_TRANSFORMER:
+        ARCHI_NAME = "transformer"
+
 
 # Number of steps to train.
 TRAINING_STEPS = 2000
@@ -22,7 +57,7 @@ if USE_CUSTOMIZE_DATASETS:
     TEST_DATA_DIR = os.path.join(f"{DATA_PATH}/ASR-SIndoDuSC/test")
     # Path of save model.
     SAVED_MODEL_PATH = os.path.join(
-    f"./saved_model/trained/saved_model.bilstm.mean.customize.gpu{str(TRAINING_STEPS)}.pt")
+    f"./saved_model/trained/saved_model.{ARCHI_NAME}.customize.gpu{str(TRAINING_STEPS)}.pt")
 else:
     # Paths of LibriSpeech datasets.
     TRAIN_DATA_DIR = os.path.join(f"{DATA_PATH}/Librispeech/train-clean-100/LibriSpeech/train-clean-100")
@@ -30,7 +65,7 @@ else:
 
     # Path of save model.
     SAVED_MODEL_PATH = os.path.join(
-    f"./saved_model/trained/saved_model.bilstm.mean.librispeech.gpu{str(TRAINING_STEPS)}.pt")
+    f"./saved_model/trained/saved_model.{ARCHI_NAME}.librispeech.gpu{str(TRAINING_STEPS)}.pt")
 
 
 # print("Test data directory exists:", os.path.exists(TEST_DATA_DIR))
@@ -52,16 +87,6 @@ LSTM_HIDDEN_SIZE = 64
 
 # Number of LSTM layers.
 LSTM_NUM_LAYERS = 3
-
-# Whether to use bi-directional LSTM.
-BI_LSTM = True
-
-# If false, use last frame of LSTM inference as aggregated output;
-# if true, use mean frame of LSTM inference as aggregated output.
-FRAME_AGGREGATION_MEAN = True
-
-# If true, we use transformer instead of LSTM.
-USE_TRANSFORMER = False
 
 # Dimension of transformer layers.
 TRANSFORMER_DIM = 32
@@ -86,11 +111,6 @@ LEARNING_RATE = 0.0001
 
 # Save a model to disk every these many steps.
 SAVE_MODEL_FREQUENCY = 500
-
-
-
-# Whether we are going to train with SpecAugment.
-SPECAUG_TRAINING = False
 
 # Parameters for SpecAugment training.
 SPECAUG_FREQ_MASK_PROB = 0.3
