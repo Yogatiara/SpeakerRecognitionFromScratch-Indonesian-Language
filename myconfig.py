@@ -49,7 +49,7 @@ else:
 
 
 # Number of steps to train.
-TRAINING_STEPS = 2000
+TRAINING_STEPS = 1000
 
 if USE_CUSTOMIZE_DATASETS:
     # path of indonesian datasets
