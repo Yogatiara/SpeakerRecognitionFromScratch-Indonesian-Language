@@ -184,6 +184,13 @@ def run_training():
     plt.plot(losses)
     plt.xlabel("step")
     plt.ylabel("loss")
+
+    output_dir = myconfig.TRAIN_DATA_DIR
+    # os.makedirs(output_dir, exist_ok=True)  
+    output_file = os.path.join(output_dir, "training_loss_plot.png")
+    plt.savefig(output_file)
+    print(f"Grafik loss telah disimpan di: {output_file}")
+
     plt.show()
 
 

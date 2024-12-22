@@ -54,7 +54,7 @@ TRAINING_STEPS = 1000
 if USE_CUSTOMIZE_DATASETS:
     # path of indonesian datasets
     TRAIN_DATA_DIR = os.path.join(f"{DATA_PATH}/ASR-SIndoDuSC/WAV/train")
-    TEST_DATA_DIR = os.path.join(f"{DATA_PATH}/ASR-SIndoDuSC/test")
+    TEST_DATA_DIR = os.path.join(f"{DATA_PATH}/ASR-SIndoDuSC/WAV/test")
     # Path of save model.
     SAVED_MODEL_PATH = os.path.join(
     f"./saved_model/trained/saved_model.{ARCHI_NAME}.customize.gpu{str(TRAINING_STEPS)}.pt")
@@ -130,7 +130,7 @@ SLIDING_WINDOW_STEP = 50  # 1.6 seconds
 NUM_EVAL_TRIPLETS = 1000
 
 # Step of threshold sweeping for computing Equal Error Rate (EER).
-EVAL_THRESHOLD_STEP = 0.001
+EVAL_THRESHOLD_STEP = 0.01
 
 # Number of processes for multi-processing.
 NUM_PROCESSES = min(multiprocessing.cpu_count(), BATCH_SIZE)
